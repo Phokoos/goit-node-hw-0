@@ -1,13 +1,12 @@
-import yargs from "yargs";
 import { program } from "commander";
 import { addContact, getContactById, listContacts, removeContact } from "./contacts.js";
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
 	try {
 		switch (action) {
-			case "read":
+			case "list":
 				const data = await listContacts();
-				console.log(data);
+				console.table(data);
 				break;
 			case 'get':
 				const contact = await getContactById(id)
@@ -45,18 +44,6 @@ program.parse()
 const argv = program.opts();
 
 invokeAction(argv);
-
-
-
-// invokeAction({ action: "read" })
-// invokeAction({ action: "get", id: "qdggE76Jtbfd9eWJHrssH" })
-// invokeAction({ action: "add", name: "Mykola", email: "one@mail.com", phone: "(380) 99 72 72 178" })
-// invokeAction({ action: "remove", id: "rsKkOQUi80UsgVPCcLZZW" })
-
-// const { argv } = yargs(process.argv.slice(2));
-// console.log(argv);
-
-// invokeAction(argv);
 
 
 
