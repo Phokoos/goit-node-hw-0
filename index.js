@@ -1,5 +1,6 @@
-// console.log("hello");
-import { addContact, getContactById, listContacts } from "./contacts.js";
+import yargs from "yargs";
+import { program } from "commander";
+import { addContact, getContactById, listContacts, removeContact } from "./contacts.js";
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
 	try {
@@ -19,7 +20,8 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 				break;
 
 			case 'remove':
-				// ... id
+				const removedContact = await removeContact(id)
+				console.log(removedContact);
 				break;
 
 			default:
@@ -30,6 +32,31 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 	}
 
 }
+
+program
+	.option('-a, --action <type>', 'choose action')
+	.option('-i, --id <type>', 'user id')
+	.option('-n, --name <type>', 'user name')
+	.option('-e, --email <type>', 'user email')
+	.option('-p, --phone <type>', 'user phone');
+
+program.parse()
+
+const argv = program.opts();
+
+invokeAction(argv);
+
+
+
 // invokeAction({ action: "read" })
 // invokeAction({ action: "get", id: "qdggE76Jtbfd9eWJHrssH" })
-invokeAction({ action: "add", name: "Mykola", email: "one@mail.com", phone: "(380) 99 72 72 178" })
+// invokeAction({ action: "add", name: "Mykola", email: "one@mail.com", phone: "(380) 99 72 72 178" })
+// invokeAction({ action: "remove", id: "rsKkOQUi80UsgVPCcLZZW" })
+
+// const { argv } = yargs(process.argv.slice(2));
+// console.log(argv);
+
+// invokeAction(argv);
+
+
+
